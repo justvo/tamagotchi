@@ -1,19 +1,15 @@
-import logo from './logo.svg';
-import { useState } from 'react';
-///import Characteristics from './components/Characteristics.js';
-import character from './components/ClassTamagotchi.js';
+import React from 'react';
 import './App.css';
+import Tamagotchi from './components/Tamagotchi';
 
 
 
 function App() {
-  const key = Object.key(character.characteristics);
-  const val = Object.values(character.characteristics);
+
 
   return (
     <div>
-      <p>{key}</p>
-      <p>{val}</p>
+      <Tamagotchi/>
     </div>
   );
 
