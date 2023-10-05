@@ -1,19 +1,19 @@
 import logo from './logo.svg';
 import { useState } from 'react';
+///import Characteristics from './components/Characteristics.js';
+import character from './components/ClassTamagotchi.js';
 import './App.css';
 
+
+
 function App() {
-  const [name, setName] = useState("");
-  
+  const key = Object.key(character.characteristics);
+  const val = Object.values(character.characteristics);
+
   return (
-    <div className='App'>
-      <label className='lable'>Name</label>
-      <input
-      type = "text"
-      value={name}
-      onChange={(e)=>setName(e.target.value)}>
-      </input>
-      <p>Hi, {name}</p>
+    <div>
+      <p>{key}</p>
+      <p>{val}</p>
     </div>
   );
 
