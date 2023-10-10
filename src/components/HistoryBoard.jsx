@@ -1,11 +1,23 @@
 import React, { useState } from 'react';
 
 const HistoryBoard = () => {
-    const [history, setHistory] = useState([]);
+    const [history, setHistory] = useState(() => 
+    {
+        const localHistory = localStorage.getItem('localHistory');
+        return localHistory ? JSON.parse(localHistory) : [];
+    }
+    );
 
     // Зробіть функцію addToHistory статичною
     HistoryBoard.addToHistory = (message) => {
-        setHistory([...history, message]);
+        setHistory((prevHistory) => {
+            if(prevHistory.length> 15 ){
+                prevHistory.length = prevHistory.length-1; 
+            }
+            const newHistory = [message,...prevHistory ];
+            localStorage.setItem('localHistory', JSON.stringify(newHistory));
+            return newHistory;
+        });
     };
 
     return (

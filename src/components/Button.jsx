@@ -1,5 +1,5 @@
 import React from 'react';
-import HistoryBoard from './HistoryBoard';
+
 
 const Button = ({text, className, onClick }) =>{
 

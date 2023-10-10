@@ -2,11 +2,17 @@ import React, { useState, useEffect } from "react";
 import Button from "./Button";
 import RenameAlert from "./RenameAlert";
 import HistoryBoard from "./HistoryBoard";
+import EndGame from "./EndGame";
 
-function Tamagotchi() {
-    const [showRename, setShowRename] = useState(false)
-    const [name, setName] = useState("my Tamagotchi");
-    const [characteristics, changeCharacteristics] = useState({
+
+
+function Tamagotchi({game, changeGameState}) {
+    
+    
+    const [showRename, setShowRename] = useState(false);
+    const [showEndGamePanel, setShowEndGamePanel] = useState(false);
+    const [name, setName] = useState(localStorage.getItem('localName')||"my Tamagotchi");
+    const [characteristics, changeCharacteristics] = useState( JSON.parse(localStorage.getItem('localCharacteristics'))||{
         "health": 100,
         "happiness": 100,
         "satiety": 100,
@@ -14,7 +20,14 @@ function Tamagotchi() {
         "purity": 100,
     });
 
+
+
+
+
+
+
     useEffect(() => {
+        if(game){
         const reduceСharacteristics = setInterval(() => {
 
             changeCharacteristics((prevChar) => ({
@@ -24,14 +37,21 @@ function Tamagotchi() {
                 "vigor": prevChar.vigor - 1,
                 "purity": prevChar.purity - 1,
             }));
-        }, 1000);
+            localStorage.setItem('localCharacteristics', JSON.stringify(characteristics));
+        }, 2000);
 
         const checkCharacteristics = setInterval(() => {
             for (const k in characteristics) {
                 if (characteristics[k] <= 0) {
-
+                    setShowEndGamePanel(true);
+                    characteristics[k] = 0;
+                    changeCharacteristics((prevChar) => ({
+                        ...prevChar,
+                    }));
                     clearInterval(reduceСharacteristics);
                     clearInterval(checkCharacteristics);
+                    
+
                 }
                 if(characteristics[k] > 100) {
                     characteristics[k]= 100; 
@@ -46,31 +66,60 @@ function Tamagotchi() {
             clearInterval(reduceСharacteristics);
             clearInterval(checkCharacteristics);
         };
-    }, [characteristics]);
-    const rename =()=>{
-        setShowRename(true);
-
     }
+    }, [game, characteristics]);
+
+    if(!game) return null;
+
+
+    // open rename panel
+    const rename =()=>{
+        setShowRename(true); 
+        HistoryBoard.addToHistory("Do you want to rename me?");
+    }
+    // close rename panel
     const closeRename =()=>{
         setShowRename(false);
     }
+    // save new name
     const setNewName = (v)=>{
         setName(v);
+        HistoryBoard.addToHistory(`Now I have a new name: ${v}. Sounds great`);
+        localStorage.setItem('localName', v);
+    }
+
+    const restartGame =()=>{
+        setShowEndGamePanel(false);
+        setName('my Tamagotchi');
+
+        changeCharacteristics({
+            "health": 100,
+            "happiness": 100,
+            "satiety": 100,
+            "vigor": 100,
+            "purity": 100,
+        })
+    }
+
+    const endGame = ()=>{
+        restartGame();
+        changeGameState();
+        localStorage.removeItem('localName');
+        localStorage.removeItem('localHistory');
+        localStorage.removeItem('localCharacteristics');
     }
 
     const play = () => {
 
         if (characteristics.happiness >= 85) {
-            const message = "I don't want to play( happiness -10)";
-            HistoryBoard.addToHistory(message);
+            HistoryBoard.addToHistory("I don't want to play( happiness -10)");
             changeCharacteristics((prevChar) => ({
                 ...prevChar,
                 "happiness": prevChar.happiness - 10,
 
             }))
         } else {
-            const message = "Thanks for playing with me(happiness +20)";
-            HistoryBoard.addToHistory(message);
+            HistoryBoard.addToHistory("Thanks for playing with me(happiness +20)");
             changeCharacteristics((prevChar) => ({
                 ...prevChar,
                 "happiness": prevChar.happiness + 20,
@@ -83,12 +132,14 @@ function Tamagotchi() {
 
     const feed = () => {
         if (characteristics.satiety >= 85) {
+            HistoryBoard.addToHistory("I'm not hungry (health -10)");
             changeCharacteristics((prevChar) => ({
                 ...prevChar,
                 "health": prevChar.health - 10,
                 "purity": prevChar.purity - 10
             }))
         } else {
+            HistoryBoard.addToHistory("Thank you for feeding me (satiety +20)");
             changeCharacteristics((prevChar) => ({
                 ...prevChar,
                 "satiety": prevChar.satiety + 20,
@@ -99,12 +150,14 @@ function Tamagotchi() {
     }
     const heal = () => {
         if (characteristics.health >= 85) {
+            HistoryBoard.addToHistory("Thanks for playinI'm already healthy, I don't need to be treated(health -10)");
             changeCharacteristics((prevChar) => ({
                 ...prevChar,
                 "health": prevChar.health - 10,
                 "happiness": prevChar.happiness - 10
             }))
         } else {
+            HistoryBoard.addToHistory("Thank you for the treatment, I am healthier now (health +20)");
             changeCharacteristics((prevChar) => ({
                 ...prevChar,
                 "health": prevChar.health + 20,
@@ -114,12 +167,14 @@ function Tamagotchi() {
     }
     const wash = () => {
         if (characteristics.purity >= 85) {
+            HistoryBoard.addToHistory("Can't you see that I glow with purity?(happiness -10)");
             changeCharacteristics((prevChar) => ({
                 ...prevChar,
                 "health": prevChar.health - 10,
                 "happiness": prevChar.happiness - 10
             }))
         } else {
+            HistoryBoard.addToHistory("Now I am clean, thank you (purity +20)");
             changeCharacteristics((prevChar) => ({
                 ...prevChar,
                 "purity": prevChar.purity + 20,
@@ -130,11 +185,13 @@ function Tamagotchi() {
     }
     const sleep = () => {
         if (characteristics.vigor >= 85) {
+            HistoryBoard.addToHistory("it is not yet time to sleep (happiness -10)");
             changeCharacteristics((prevChar) => ({
                 ...prevChar,
                 "happiness": prevChar.happiness - 10
             }))
         } else {
+            HistoryBoard.addToHistory("You're right, it's time for bed (vigor +20)");
             changeCharacteristics((prevChar) => ({
                 ...prevChar,
                 "vigor": prevChar.vigor + 20,
@@ -144,6 +201,13 @@ function Tamagotchi() {
             }))
         }
     }
+
+    // const localClear =()=>{
+    //     localStorage.removeItem('localName');
+    //     localStorage.removeItem('localHistory');
+    //     localStorage.removeItem('localCharacteristics');
+    //     restartGame();
+    // }
 
 
     return (
@@ -161,6 +225,12 @@ function Tamagotchi() {
                     }
                 </ul>
             </div>
+            <div className="tamagotchi-img">
+
+
+                
+            </div>
+
                     {/* button for change characteristics */}
 
             <div className="buttons">
@@ -170,9 +240,15 @@ function Tamagotchi() {
                     <Button className="buttons-item" onClick={heal} text="Heal"/>
                     <Button className="buttons-item" onClick={sleep} text="Sleep"/>
                     <Button className="visible-rename" onClick={rename} text="Rename your Tamagotchi"/>
+                    {/* <Button className="buttons-item" onClick={localClear} text="CLear locstor"/> */}
+                    <Button className="buttons-item" onClick={endGame} text="exit"/>
+
+
             </div>
+            {/* panel for change name */}
             <div className="alert-panel">
                     <RenameAlert className="rename-alert" visible={showRename} onClose={closeRename} setNameValue={setNewName} />
+                    <EndGame visible={showEndGamePanel} onClickRestart={restartGame} onClickFinish={endGame}/>
             </div>
             <div>
                 <HistoryBoard/>
