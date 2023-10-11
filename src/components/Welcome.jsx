@@ -2,11 +2,12 @@ import React from "react";
 import Button from "./Button";
 
 
-const Welcome =({visible, changeGameState})=>{
+const Welcome =({visible, changesetwelcomePanelShow, changesetnamedPanelShow})=>{
     if (!visible) return null;
     
     const start = ()=>{
-        changeGameState(); 
+        changesetwelcomePanelShow(false); 
+        changesetnamedPanelShow(true);
         localStorage.removeItem('localName');
         localStorage.removeItem('localHistory');
         localStorage.removeItem('localCharacteristics');

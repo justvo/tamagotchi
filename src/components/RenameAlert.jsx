@@ -6,6 +6,7 @@ const RenameAlert = ({ className, visible, onClose, setNameValue }) => {
     // const [nameValue, setNewNameValue] = useState('');
 
     if (!visible) return null;
+    
     const handleSaveClick = () => {
         // change name after press "Save"
         setNameValue(childNameValue);
