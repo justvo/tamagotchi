@@ -3,10 +3,11 @@ import Button from "./Button";
 import RenameAlert from "./RenameAlert";
 import HistoryBoard from "./HistoryBoard";
 import EndGame from "./EndGame";
+import { playFunction, feedFunction, healFunction, sleepFunction, washFunction } from "./ChangeCharFunc";
+import { startTimers} from "./TimerFunc";
 
 
-
-function Tamagotchi({ game, changeGameState, userName, pause }) {
+function Tamagotchi({ game, changeGameState, userName }) {
 
 
     const [showRename, setShowRename] = useState(false);
@@ -19,88 +20,47 @@ function Tamagotchi({ game, changeGameState, userName, pause }) {
         "vigor": 100,
         "purity": 100,
     });
-    const [ifNamed, setIfNamed] = useState(localStorage.getItem('localIfNamed') || false);
-    const [pause, setpause] = useState(true)
+    const [pause, setpause] = useState(false);
 
 
     useEffect(() => {
         const changeName = () => {
-            setName(localStorage.getItem('localName') || userName||'');
-            if(name!=='')setIfNamed(true); 
+            setName(localStorage.getItem('localName') || userName || '');
+            //start change characteristics after named
+            if (name !== '') setpause(false);
         };
         changeName();
-    }, [userName]);
+    }, [userName, name]);
 
 
 
     useEffect(() => {
-
-        if (ifNamed && pause) {
-            const reduceCharacteristics = setInterval(() => {
-
-                changeCharacteristics((prevChar) => ({
-                    "health": prevChar.health - 1,
-                    "happiness": prevChar.happiness - 1,
-                    "satiety": prevChar.satiety - 1,
-                    "vigor": prevChar.vigor - 1,
-                    "purity": prevChar.purity - 1,
-                }));
-                localStorage.setItem('localCharacteristics', JSON.stringify(characteristics));
-            }, 2000);
-
-            const checkCharacteristics = setInterval(() => {
-                for (const k in characteristics) {
-                    if (characteristics[k] <= 0) {
-                        setShowEndGamePanel(true);
-                        characteristics[k] = 0;
-                        changeCharacteristics((prevChar) => ({
-                            ...prevChar,
-                        }));
-                        clearInterval(reduceCharacteristics);
-                        clearInterval(checkCharacteristics);
+        return startTimers(pause, characteristics, changeCharacteristics, setShowEndGamePanel);
+    }, [pause, characteristics]);
 
 
-                    }
-                    if (characteristics[k] > 100) {
-                        characteristics[k] = 100;
-                        changeCharacteristics((prevChar) => ({
-                            ...prevChar,
-                        }));
-                    }
-                }
-            }, 10);
-
-
-            return () => {
-                clearInterval(reduceCharacteristics);
-                clearInterval(checkCharacteristics);
-            };
-        }
-
-    }, [ifNamed, pause, characteristics]);
 
     if (!game) return null;
-
-
 
 
     // open rename panel
     const rename = () => {
         setShowRename(true);
         HistoryBoard.addToHistory("Do you want to rename me?");
-        setpause(false);
+        setpause(true);
     }
     // close rename panel
     const closeRename = () => {
         setShowRename(false);
-        setpause(true);
+        //stop change characteristics
+        setpause(false);
     }
     // save new name
     const setNewName = (v) => {
         if (v.trim() !== "") {
             setName(v);
-            setpause(true);
-            localStorage.setItem('localIfNamed', ifNamed);
+            //stop change characteristics
+            setpause(false);
             HistoryBoard.addToHistory(`Now I have a new name: ${v}. Sounds great`);
             localStorage.setItem('localName', v);
             closeRename();
@@ -129,104 +89,25 @@ function Tamagotchi({ game, changeGameState, userName, pause }) {
         localStorage.removeItem('localHistory');
         localStorage.removeItem('localCharacteristics');
     }
-
+    //function 
     const play = () => {
-
-        if (characteristics.happiness >= 85) {
-            HistoryBoard.addToHistory("I don't want to play( happiness -10)");
-            changeCharacteristics((prevChar) => ({
-                ...prevChar,
-                "happiness": prevChar.happiness - 10,
-
-            }))
-        } else {
-            HistoryBoard.addToHistory("Thanks for playing with me(happiness +20)");
-            changeCharacteristics((prevChar) => ({
-                ...prevChar,
-                "happiness": prevChar.happiness + 20,
-                "vigor": prevChar.vigor - 5,
-                "purity": prevChar.purity - 5
-            }))
-        }
-        console.log(characteristics)
+        playFunction(characteristics, changeCharacteristics, HistoryBoard);
     }
 
     const feed = () => {
-        if (characteristics.satiety >= 85) {
-            HistoryBoard.addToHistory("I'm not hungry (health -10)");
-            changeCharacteristics((prevChar) => ({
-                ...prevChar,
-                "health": prevChar.health - 10,
-                "purity": prevChar.purity - 10
-            }))
-        } else {
-            HistoryBoard.addToHistory("Thank you for feeding me (satiety +20)");
-            changeCharacteristics((prevChar) => ({
-                ...prevChar,
-                "satiety": prevChar.satiety + 20,
-                "health": prevChar.health + 15,
-                "purity": prevChar.purity - 5
-            }))
-        }
+        feedFunction(characteristics, changeCharacteristics, HistoryBoard);
     }
     const heal = () => {
-        if (characteristics.health >= 85) {
-            HistoryBoard.addToHistory("Thanks for playinI'm already healthy, I don't need to be treated(health -10)");
-            changeCharacteristics((prevChar) => ({
-                ...prevChar,
-                "health": prevChar.health - 10,
-                "happiness": prevChar.happiness - 10
-            }))
-        } else {
-            HistoryBoard.addToHistory("Thank you for the treatment, I am healthier now (health +20)");
-            changeCharacteristics((prevChar) => ({
-                ...prevChar,
-                "health": prevChar.health + 20,
-                "satiety": prevChar.satiety + 5,
-            }))
-        }
+        healFunction(characteristics, changeCharacteristics, HistoryBoard);
     }
     const wash = () => {
-        if (characteristics.purity >= 85) {
-            HistoryBoard.addToHistory("Can't you see that I glow with purity?(happiness -10)");
-            changeCharacteristics((prevChar) => ({
-                ...prevChar,
-                "health": prevChar.health - 10,
-                "happiness": prevChar.happiness - 10
-            }))
-        } else {
-            HistoryBoard.addToHistory("Now I am clean, thank you (purity +20)");
-            changeCharacteristics((prevChar) => ({
-                ...prevChar,
-                "purity": prevChar.purity + 20,
-                "health": prevChar.health + 10,
-                "satiety": prevChar.satiety + 5,
-            }))
-        }
+        washFunction(characteristics, changeCharacteristics, HistoryBoard);
     }
     const sleep = () => {
-        if (characteristics.vigor >= 85) {
-            HistoryBoard.addToHistory("it is not yet time to sleep (happiness -10)");
-            changeCharacteristics((prevChar) => ({
-                ...prevChar,
-                "happiness": prevChar.happiness - 10
-            }))
-        } else {
-            HistoryBoard.addToHistory("You're right, it's time for bed (vigor +20)");
-            changeCharacteristics((prevChar) => ({
-                ...prevChar,
-                "vigor": prevChar.vigor + 20,
-                "health": prevChar.health + 10,
-                "satiety": prevChar.satiety + 5,
-                "happiness": prevChar.happiness + 5
-            }))
-        }
+        sleepFunction(characteristics, changeCharacteristics, HistoryBoard);
     }
 
-    // const localClear =()=>{
-    //     localStorage.clear();
-    //     restartGame();
-    // }
+
 
 
     return (
@@ -264,11 +145,9 @@ function Tamagotchi({ game, changeGameState, userName, pause }) {
                 <Button className="buttons-item" onClick={heal} text="Heal" />
                 <Button className="buttons-item" onClick={sleep} text="Sleep" />
                 <Button className="visible-rename" onClick={rename} text="Rename your Tamagotchi" />
-                {/* <Button className="buttons-item" onClick={localClear} text="CLear locstor"/> */}
                 <Button className="buttons-item" onClick={endGame} text="exit" />
-
-
             </div>
+
 
             <div>
                 <HistoryBoard />

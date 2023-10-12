@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import Tamagotchi from './components/Tamagotchi';
 import Welcome from './components/Welcome';
@@ -14,7 +14,6 @@ function App() {
   const [userName, setUserName] = useState('');
 
   useEffect(() => {
-    // Используем localStorage для установки начальных значений только после загрузки
     const welcomePanelValue = localStorage.getItem('welcomePanel');
     const namedPanelShowValue = localStorage.getItem('namedPanelShow');
     const gameOrNotValue = localStorage.getItem('gameOrNot');
@@ -36,39 +35,37 @@ function App() {
       setUserName(userNameValue);
     }
   }, []);
-  const changeGameState =(val)=>{
 
-    setGameOrNot(val);
-    localStorage.setItem("gameOrNot", val );
-  }
 
-  const enterUserName = (v) =>{
-    if(v.trim() !==""){
-      setUserName(v); 
-      localStorage.setItem("localName", v );
+  const enterUserName = (v) => {
+    if (v.trim() !== "") {
+      setUserName(v);
+      localStorage.setItem("localName", v);
       changeGameState(true);
       changesetnamedPanelShow(false);
     }
   }
 
+  const changeGameState = (val) => {
+    setGameOrNot(val);
+    localStorage.setItem("gameOrNot", val);
+  }
 
-  const changesetwelcomePanelShow = (val)=>{
-
+  const changesetwelcomePanelShow = (val) => {
     setWelcomePanelShow(val);
-
-    localStorage.setItem('welcomePanel', val );
+    localStorage.setItem('welcomePanel', val);
   }
 
-  const changesetnamedPanelShow = (val)=>{
+  const changesetnamedPanelShow = (val) => {
     setNamedPanelShow(val);
-    localStorage.setItem("namedPanelShow", val );
+    localStorage.setItem("namedPanelShow", val);
   }
 
-  const fromNameToWelcom = ()=>{
+  const fromNameToWelcom = () => {
     changesetwelcomePanelShow(true);
     changesetnamedPanelShow(false);
   }
-  const fromGameToWelcom = ()=>{
+  const fromGameToWelcom = () => {
     changesetwelcomePanelShow(true);
     changeGameState(false);
   }
@@ -78,8 +75,8 @@ function App() {
     <div>
       <Welcome visible={welcomePanel} changesetwelcomePanelShow={changesetwelcomePanelShow} changesetnamedPanelShow={changesetnamedPanelShow} />
       <RenameAlert className="first-name-alert" visible={namedPanelShow} onClose={fromNameToWelcom} setNameValue={enterUserName} />
-      <Tamagotchi  game={gameOrNot} changeGameState = {fromGameToWelcom} userName={userName} />
-    </div> 
+      <Tamagotchi game={gameOrNot} changeGameState={fromGameToWelcom} userName={userName} />
+    </div>
   );
 
 }
