@@ -1,12 +1,13 @@
 import React from "react";
 import Button from "./Button";
+import "./style/Welcome.css"
 
 
-const Welcome =({visible, changesetwelcomePanelShow, changesetnamedPanelShow})=>{
+const Welcome = ({ visible, changesetwelcomePanelShow, changesetnamedPanelShow }) => {
     if (!visible) return null;
-    
-    const start = ()=>{
-        changesetwelcomePanelShow(false); 
+
+    const start = () => {
+        changesetwelcomePanelShow(false);
         changesetnamedPanelShow(true);
         localStorage.removeItem('localName');
         localStorage.removeItem('localHistory');
@@ -15,11 +16,16 @@ const Welcome =({visible, changesetwelcomePanelShow, changesetnamedPanelShow})=>
     }
 
 
-    return(
+    return (
         <div className="welcome">
-            <span>Do you want to play?</span>
-            <Button className="welcome-yes" onClick={start} text="Start"/>
-            <Button className="welcome-yes-too" onClick={start} text="Start too but other color"/>
+            <div className="welcome-container">
+                <span className="welcome-title">Do you want to play?</span>
+                <div className="welcome-buttons">
+                    <Button className="welcome-yes" onClick={start} text="Start" />
+                    <Button className="welcome-yes-too" onClick={start} text="Start too but other color" />
+                </div>
+            </div>
+
         </div>
     )
 

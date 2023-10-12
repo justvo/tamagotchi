@@ -116,8 +116,12 @@ function Tamagotchi({ game, changeGameState, userName }) {
             <div className="alert-panel">
                 <RenameAlert className="rename-alert" visible={showRename} onClose={closeRename} setNameValue={setNewName} />
                 <EndGame visible={showEndGamePanel} onClickRestart={restartGame} onClickFinish={endGame} />
+            </div >
+            <div className="image-and-name">
+            <h1 className="image-name">{name}</h1>
+            <img className="image" src={require('/workspaces/tamagotchi/src/components/img/Tamagotchi.png')} alt="My Tamagotchi" width={200} />
             </div>
-            <h1>{name}</h1>
+
             <div className="characteristics" >
                 <ul >
                     {/* print characteristics */}

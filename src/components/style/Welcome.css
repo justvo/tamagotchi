@@ -1,0 +1,41 @@
+.welcome{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.welcome-container{
+    border-radius: 15px;
+    background-color: rgba(83, 76, 136, 0.83);
+    display: flex;
+    justify-content: space-around;
+    align-items:center ;
+    flex-direction: column;
+    height: 26vw;
+    width: clamp(260px, 59vw, 600px);
+}
+.welcome-title{
+    color: antiquewhite;
+    font-weight: 500;
+    font-size:  clamp(16px, 5vw, 45px);
+
+}
+.welcome-buttons{
+
+    width: 76%;
+    display: flex;
+    justify-content: space-between;
+}
+.welcome-yes,
+.welcome-yes-too{
+    font-size: clamp(12px, 3vw, 18px);
+    border-radius: 10px;
+    background-color: rgb(220, 85, 161); 
+    border: none;
+    color: rgb(244, 238, 242);
+}
+.welcome-yes-too{
+    background-color: rgb(244, 238, 242);
+    color: rgb(220, 85, 161); ;
+}

@@ -72,7 +72,7 @@ function App() {
 
 
   return (
-    <div>
+    <div className='main'>
       <Welcome visible={welcomePanel} changesetwelcomePanelShow={changesetwelcomePanelShow} changesetnamedPanelShow={changesetnamedPanelShow} />
       <RenameAlert className="first-name-alert" visible={namedPanelShow} onClose={fromNameToWelcom} setNameValue={enterUserName} />
       <Tamagotchi game={gameOrNot} changeGameState={fromGameToWelcom} userName={userName} />
