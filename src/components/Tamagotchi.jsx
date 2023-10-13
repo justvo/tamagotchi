@@ -140,7 +140,7 @@ function Tamagotchi({ game, changeGameState, userName }) {
                         <button className="visible-rename" onClick={rename}>Rename</button>
                         <button className="buttons-item" onClick={endGame} >Exit</button>
                     </div>
-                    <img className="image" src={require('/workspaces/tamagotchi/src/components/img/Tamagotchi.png')} alt="My Tamagotchi" />
+                    <img className="image" src={require('./img/Tamagotchi.png')} alt="My Tamagotchi" />
                 </div>
 
                 <div className="play-buttons">
