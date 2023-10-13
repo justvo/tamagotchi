@@ -21,7 +21,7 @@ const Welcome = ({ visible, changesetwelcomePanelShow, changesetnamedPanelShow }
             <div className="welcome-container">
                 <span className="welcome-title">Do you want to play?</span>
                 <div className="welcome-buttons">
-                    <Button className="welcome-yes" onClick={start} text="Start" />
+                    <button className="welcome-yes" onClick={start}>Start</button>
                     <Button className="welcome-yes-too" onClick={start} text="Start too but other color" />
                 </div>
             </div>

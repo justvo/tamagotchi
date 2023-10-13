@@ -1,0 +1,11 @@
+.finish-game,
+.restart{
+    font-size: clamp(12px, 3vw, 18px);
+    border-radius: 10px;
+    background-color: rgb(226, 70, 158); 
+    border: none;
+    color: rgb(244, 238, 242);
+}
+.finish-game{
+    background-color: rgb(228, 129, 185); 
+}

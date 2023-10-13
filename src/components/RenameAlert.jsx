@@ -25,8 +25,8 @@ const RenameAlert = ({ className, visible, onClose, setNameValue }) => {
                     placeholder="Stepan or Oleg?))"
                 />
                 <div className="alert-buttons">
-                <button onClick={onClose}>Close</button>
-                <button onClick={handleSaveClick}>Save</button>
+                <button className="alert-button" onClick={onClose}>Close</button>
+                <button className="alert-button" onClick={handleSaveClick}>Save</button>
                 </div>
             
             </div>

@@ -4,7 +4,8 @@ import RenameAlert from "./RenameAlert";
 import HistoryBoard from "./HistoryBoard";
 import EndGame from "./EndGame";
 import { playFunction, feedFunction, healFunction, sleepFunction, washFunction } from "./ChangeCharFunc";
-import { startTimers} from "./TimerFunc";
+import { startTimers } from "./TimerFunc";
+import './style/Tamagotchi.css'
 
 
 function Tamagotchi({ game, changeGameState, userName }) {
@@ -113,17 +114,11 @@ function Tamagotchi({ game, changeGameState, userName }) {
     return (
         <div className="tamagotchi" >
             {/* panel for change name or end */}
-            <div className="alert-panel">
-                <RenameAlert className="rename-alert" visible={showRename} onClose={closeRename} setNameValue={setNewName} />
-                <EndGame visible={showEndGamePanel} onClickRestart={restartGame} onClickFinish={endGame} />
-            </div >
-            <div className="image-and-name">
-            <h1 className="image-name">{name}</h1>
-            <img className="image" src={require('/workspaces/tamagotchi/src/components/img/Tamagotchi.png')} alt="My Tamagotchi" width={200} />
-            </div>
+
+
 
             <div className="characteristics" >
-                <ul >
+                <ul className="characteristics-list" >
                     {/* print characteristics */}
                     {
                         Object.entries(characteristics).map(([k, val]) => (
@@ -134,28 +129,36 @@ function Tamagotchi({ game, changeGameState, userName }) {
                     }
                 </ul>
             </div>
-            <div className="tamagotchi-img">
 
-
-
-            </div>
 
             {/* button for change characteristics */}
+            <div className="tamagotchi-main-contant">
 
-            <div className="buttons">
-                <Button className="buttons-item" onClick={play} text="Play" />
-                <Button className="buttons-item" onClick={feed} text="Feed" />
-                <Button className="buttons-item" onClick={wash} text="Clean" />
-                <Button className="buttons-item" onClick={heal} text="Heal" />
-                <Button className="buttons-item" onClick={sleep} text="Sleep" />
-                <Button className="visible-rename" onClick={rename} text="Rename your Tamagotchi" />
-                <Button className="buttons-item" onClick={endGame} text="exit" />
+                <div className="image-and-name">
+                    <h1 className="image-name">{name}</h1>
+                    <div className="control-buttons">
+                        <button className="visible-rename" onClick={rename}>Rename your Tamagotchi</button>
+                        <Button className="buttons-item" onClick={endGame} text="exit" />
+                    </div>
+                    <img className="image" src={require('/workspaces/tamagotchi/src/components/img/Tamagotchi.png')} alt="My Tamagotchi" />
+                </div>
+
+                <div className="play-buttons">
+                    <Button className="buttons-item" onClick={play} text="Play" />
+                    <Button className="buttons-item" onClick={feed} text="Feed" />
+                    <Button className="buttons-item" onClick={wash} text="Clean" />
+                    <Button className="buttons-item" onClick={heal} text="Heal" />
+                    <Button className="buttons-item" onClick={sleep} text="Sleep" />
+
+                </div>
             </div>
-
-
             <div>
                 <HistoryBoard />
             </div>
+            <div >
+                <RenameAlert className="rename-alert" visible={showRename} onClose={closeRename} setNameValue={setNewName} />
+                <EndGame visible={showEndGamePanel} onClickRestart={restartGame} onClickFinish={endGame} />
+            </div >
         </div>
     )
 

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './style/HistoryBoard.css'
 
 const HistoryBoard = () => {
     const [history, setHistory] = useState(() => 
@@ -21,12 +22,12 @@ const HistoryBoard = () => {
     };
 
     return (
-        <div>
-            <h1>HistoryBoard</h1>
+        <div className='history-board'>
+            <h1 className='history-board-title'>HistoryBoard</h1>
             <div>
-                <ul>
+                <ul className='history-lists'>
                     {history.map((item, index) => (
-                        <li key={index}>{item}</li>
+                        <li className='history-lists-item' key={index}>{item}</li>
                     ))}
                 </ul>
             </div>
