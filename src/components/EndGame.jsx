@@ -1,5 +1,4 @@
 import React from "react";
-import Button from "./Button";
 import './style/EndGame.css'
 
 const EndGame = ({ visible, onClickRestart, onClickFinish }) => {
@@ -30,8 +29,8 @@ const EndGame = ({ visible, onClickRestart, onClickFinish }) => {
 
 
                 <div className="alert-buttons">
-                    <Button className="restart" onClick={onClickRestart} text="Restart" />
-                    <Button className="finish-game" onClick={onClickFinish} text="Finish" />
+                    <button className="restart" onClick={onClickRestart}>Restart</button>
+                    <button className="finish-game" onClick={onClickFinish} >Finish</button>
                 </div>
             </div>
 

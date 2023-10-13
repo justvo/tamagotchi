@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Button from "./Button";
 import RenameAlert from "./RenameAlert";
 import HistoryBoard from "./HistoryBoard";
 import EndGame from "./EndGame";
@@ -93,8 +92,8 @@ function Tamagotchi({ game, changeGameState, userName }) {
     //function 
     const play = () => {
         playFunction(characteristics, changeCharacteristics, HistoryBoard);
-    }
 
+    }
     const feed = () => {
         feedFunction(characteristics, changeCharacteristics, HistoryBoard);
     }
@@ -137,18 +136,18 @@ function Tamagotchi({ game, changeGameState, userName }) {
                 <div className="image-and-name">
                     <h1 className="image-name">{name}</h1>
                     <div className="control-buttons">
-                        <button className="visible-rename" onClick={rename}>Rename your Tamagotchi</button>
-                        <Button className="buttons-item" onClick={endGame} text="exit" />
+                        <button className="visible-rename" onClick={rename}>Rename</button>
+                        <button className="buttons-item" onClick={endGame} >Exit</button>
                     </div>
                     <img className="image" src={require('/workspaces/tamagotchi/src/components/img/Tamagotchi.png')} alt="My Tamagotchi" />
                 </div>
 
                 <div className="play-buttons">
-                    <Button className="buttons-item" onClick={play} text="Play" />
-                    <Button className="buttons-item" onClick={feed} text="Feed" />
-                    <Button className="buttons-item" onClick={wash} text="Clean" />
-                    <Button className="buttons-item" onClick={heal} text="Heal" />
-                    <Button className="buttons-item" onClick={sleep} text="Sleep" />
+                    <button className="buttons-item" onClick={heal} >Heal</button>
+                    <button className="buttons-item" onClick={play} >Play</button>
+                    <button className="buttons-item" onClick={feed} >Feed</button>
+                    <button className="buttons-item" onClick={sleep} >Sleep</button>
+                    <button className="buttons-item" onClick={wash} >Clean</button>
 
                 </div>
             </div>

@@ -9,7 +9,6 @@ const HistoryBoard = () => {
     }
     );
 
-    // Зробіть функцію addToHistory статичною
     HistoryBoard.addToHistory = (message) => {
         setHistory((prevHistory) => {
             if(prevHistory.length> 15 ){

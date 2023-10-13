@@ -3,6 +3,7 @@
     width: 100%;
     display: flex;
     justify-content: space-evenly;
+    align-items: center;
     flex-wrap: wrap;
     position: relative;
 }
@@ -26,8 +27,15 @@
     text-shadow: 0px 0px 3px rgb(255, 255, 255);
 }
 .characteristics {
+    display: flex;
+    justify-content:center;
     width: 15vw;
+    color:rgb(244, 238, 242);
+    margin-left: 10px ;
+    font-size: clamp(20px, 3.7vw, 32px);
+
 }
+
 .image{
     filter: drop-shadow(0px 0px 5px rgb(255, 255, 255));
     width: clamp(100px, 50vw, 500px) ;
@@ -36,4 +44,46 @@
     margin: 0;
     padding: 0;
     list-style: none;
+}
+.control-buttons,
+.play-buttons{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+.control-buttons{
+    width: 65%;
+}
+.visible-rename,
+.buttons-item,
+.buttons-item{
+    font-size: clamp(12px, 3vw, 25px);
+    border-radius: 10px;
+    background-color: rgb(220, 85, 161);
+    border: none;
+    color: rgb(244, 238, 242);
+}
+
+@media (max-width:909px) { 
+    .tamagotchi{
+        justify-content: center;
+    }
+    .tamagotchi-main-contant{
+        width: clamp(400px, 60vw, 700px);
+    }
+    .characteristics {
+        width: 30vw;
+    }
+}
+
+@media (max-width:470px) { 
+    .tamagotchi-main-contant{
+        width: clamp(320px, 100vw, 700px);
+        min-width: 320px;
+    }
+    .characteristics{
+        width:100vw;
+    }
+
 }
