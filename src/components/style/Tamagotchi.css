@@ -9,7 +9,7 @@
 }
 
 .tamagotchi-main-contant {
-    width: clamp(400px, 45vw, 700px);
+    width: clamp(400px, 40vw, 700px);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -22,42 +22,67 @@
     align-items: center;
     justify-content: center;
 }
-.image-name{
+
+.image-name {
     color: rgb(244, 238, 242);
     text-shadow: 0px 0px 3px rgb(255, 255, 255);
 }
+
 .characteristics {
     display: flex;
-    justify-content:center;
-    width: 15vw;
-    color:rgb(244, 238, 242);
-    margin-left: 10px ;
+    justify-content: center;
+    width: 19vw;
+    color: rgb(244, 238, 242);
+    margin-left: 10px;
     font-size: clamp(20px, 3.7vw, 32px);
 
 }
 
-.image{
-    filter: drop-shadow(0px 0px 5px rgb(255, 255, 255));
-    width: clamp(100px, 50vw, 500px) ;
+.characteristics-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
+
+.character-name {
+    color: rgb(245, 208, 232);
+    text-shadow: 0 0 3px rgba(239, 213, 230, 0.968);
+}
+
+.charecter-val{
+    font-weight: 700;
+    color: rgb(231, 143, 193) ;
+    text-shadow: 0 0 3px rgba(51, 49, 50, 0.66);
+
+}
+
+.image {
+    filter: drop-shadow(0px 0px 5px rgb(255, 255, 255));
+    width: clamp(100px, 50vw, 500px);
+}
+
 .characteristics-list {
+    width: 26vw;
     margin: 0;
     padding: 0;
     list-style: none;
 }
+
 .control-buttons,
-.play-buttons{
+.play-buttons {
     width: 100%;
     display: flex;
     justify-content: space-between;
     margin-bottom: 10px;
 }
-.control-buttons{
+
+.control-buttons {
     width: 65%;
 }
+
 .visible-rename,
 .buttons-item,
-.buttons-item{
+.buttons-item {
     font-size: clamp(12px, 3vw, 25px);
     border-radius: 10px;
     background-color: rgb(220, 85, 161);
@@ -65,25 +90,37 @@
     color: rgb(244, 238, 242);
 }
 
-@media (max-width:909px) { 
-    .tamagotchi{
-        justify-content: center;
+@media (max-width:982px) {
+    .tamagotchi {
+        justify-content: space-around;
     }
-    .tamagotchi-main-contant{
+
+    .tamagotchi-main-contant {
         width: clamp(400px, 60vw, 700px);
     }
+
     .characteristics {
-        width: 30vw;
+        width: 27vw;
     }
 }
 
-@media (max-width:470px) { 
-    .tamagotchi-main-contant{
+@media (max-width:593px) {
+    .tamagotchi {
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .tamagotchi-main-contant {
         width: clamp(320px, 100vw, 700px);
         min-width: 320px;
     }
-    .characteristics{
-        width:100vw;
+
+    .characteristics {
+        width: 100vw;
+    }
+
+    .characteristics-item {
+        min-width: 160px;
     }
 
 }

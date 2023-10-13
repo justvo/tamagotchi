@@ -122,7 +122,8 @@ function Tamagotchi({ game, changeGameState, userName }) {
                     {
                         Object.entries(characteristics).map(([k, val]) => (
                             <li className="characteristics-item" key={k}>
-                                <span className="character-name">{k}</span>-<span className="charecter-val">{val}</span>
+                                <span className="character-name">{k}</span>
+                                <span className="charecter-val">{val}</span>
                             </li>
                         ))
                     }
